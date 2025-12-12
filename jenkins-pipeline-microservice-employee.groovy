@@ -12,14 +12,19 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
             }
         }
-        stage('Restore Dependencies') {
+        // stage('Restore Dependencies') {
+        //     steps {
+        //         sh 'dotnet restore microservice-employee.csproj'
+        //     }
+        // }
+        // stage('Build') {
+        //     steps {
+        //         sh 'dotnet build  microservice-employee.csproj --configuration release'
+        //     }
+        // }
+        stage('Build Docker Image') {
             steps {
-                sh 'dotnet restore microservice-employee.csproj'
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'dotnet build  microservice-employee.csproj --configuration release'
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
             }
         }
         stage('login to DockerHub') {
