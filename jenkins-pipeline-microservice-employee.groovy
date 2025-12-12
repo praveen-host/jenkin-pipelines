@@ -13,11 +13,13 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
             }
         }
-        // stage('Checkout scm') {
-        //     steps {
-        //         checkout scm
-        //     }
-        // } 
+        stage('Print Environment Variables') {
+            steps {
+                script {
+                    sh 'printenv | sort'
+                }
+            }
+        }
         stage('Parese ReadMe File') {
             steps {
                 script {
@@ -28,10 +30,10 @@ pipeline {
                     }                                        
                 }                
             }
-        }
+        }      
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG}.${GIT_PREVIOUS_COMMIT}"
             }
         }
         stage('login to DockerHub') {
