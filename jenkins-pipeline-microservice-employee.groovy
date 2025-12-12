@@ -23,9 +23,16 @@ pipeline {
             }
         }
         stage('login to DockerHub') {
+            // steps {
+            //     withcredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKER_CREDENTIALS_PSW', usernameVariable: 'DOCKER_CREDENTIALS_USR')]) {
+            //         sh "echo ${DOCKER_CREDENTIALS_PSW} | docker login -u ${DOCKER_CREDENTIALS_USR} --password-stdin"
+            //     }
+            // }
             steps {
-                withcredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKER_CREDENTIALS_PSW', usernameVariable: 'DOCKER_CREDENTIALS_USR')]) {
-                    sh "echo ${DOCKER_CREDENTIALS_PSW} | docker login -u ${DOCKER_CREDENTIALS_USR} --password-stdin"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh """
+                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            """
                 }
             }
         }
