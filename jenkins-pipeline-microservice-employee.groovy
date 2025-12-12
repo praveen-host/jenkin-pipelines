@@ -12,19 +12,13 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
             }
-        }
-        stage('Print Environment Variables') {
-            steps {
-                script {
-                    sh 'printenv | sort'
-                }
-            }
-        }
+        }      
         stage('Parese ReadMe File') {
             steps {
                 script {
                     def readmeContent = readFile 'Version.txt'
                     def versionMatch   = (readmeContent =~ /(?m)^\s*Version\s*:\s*([^\s]+)\s*$/)
+                    echo "Version Match: ${versionMatch}"
                     if (versionMatch.find()) {
                         env.DOCKER_TAG = versionMatch.group(1)
                     }                                        
@@ -33,7 +27,7 @@ pipeline {
         }      
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG}.${GIT_PREVIOUS_COMMIT}"
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG}.${GIT_COMMIT}"
             }
         }
         stage('login to DockerHub') {
