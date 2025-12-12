@@ -13,11 +13,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
             }
         }
-        stage('Checkout scm') {
-            steps {
-                checkout scm
-            }
-        } 
+        // stage('Checkout scm') {
+        //     steps {
+        //         checkout scm
+        //     }
+        // } 
         stage('Parese ReadMe File') {
             steps {
                 script {
