@@ -21,7 +21,7 @@ pipeline {
         stage('File list') {
             steps {
                 sh 'pwd'
-                sh 'ls'
+                sh '../ls'
             }
         }
         stage('Parese ReadMe File') {
