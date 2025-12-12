@@ -24,7 +24,7 @@ pipeline {
            
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:${CHANGESET_NUMBER}"
+                sh "docker build -t ${DOCKER_IMAGE}:${CHANGESET_NUMBER} ."
             }
         }
         stage('login to DockerHub') {
