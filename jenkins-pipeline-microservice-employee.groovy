@@ -13,6 +13,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
             }
         }
+        stage('Checkout scm') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Parese ReadMe File') {
             steps {
                 script {
@@ -20,8 +25,7 @@ pipeline {
                     def versionMatch   = (readmeContent =~ /(?m)^\s*Version\s*:\s*([^\s]+)\s*$/)
                     if (versionMatch.find()) {
                         env.DOCKER_TAG = versionMatch.group(1)
-                    }                    
-                    env.CHANGESET_NUMBER = sh(script: 'git rev-list --count HEAD', returnStdout: true).trim()
+                    }                                        
                 }                
             }
         }
@@ -42,7 +46,7 @@ pipeline {
         }
         stage('Push image to dockerhub') {
             steps {
-                sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}.${CHANGESET_NUMBER}"
+                sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}.${GIT_COMMIT}"
             }
         }
      }
