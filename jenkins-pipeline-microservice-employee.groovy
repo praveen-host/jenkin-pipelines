@@ -16,7 +16,7 @@ pipeline {
         stage('Parese ReadMe File') {
             steps {
                 script {
-                    def readmeContent = readFile 'README.md'
+                    def readmeContent = readFile 'Version.txt'
                     def versionMatch   = (readmeContent =~ /(?m)^\s*Version\s*:\s*([^\s]+)\s*$/)
                     if (versionMatch.find()) {
                         env.DOCKER_TAG = versionMatch.group(1)
