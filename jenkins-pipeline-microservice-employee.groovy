@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:${CHANGESET_NUMBER} ."
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
             }
         }
         stage('login to DockerHub') {
@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Push image to dockerhub') {
             steps {
-                sh "docker push ${DOCKER_IMAGE}:${CHANGESET_NUMBER}"
+                sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
      }
