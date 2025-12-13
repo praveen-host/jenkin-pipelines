@@ -5,23 +5,14 @@ pipeline {
         DOCKER_IMAGE = 'yadavpk/microservice-employee'
         DOCKER_TAG = 'latest'
         DOCKER_CREDENTIALS = credentials('dockerhub-creds')
-        CHANGESET_NUMBER=''
+        CHANGESET_NUMBER = ''
     }
     stages {
         stage('Checkout From Master Branch') {
             steps {
                 git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
             }
-        }      
-        stage('Get Changeset Number') {
-            steps {
-                script {
-                    CHANGESET_NUMBER = sh(script: "git ls-remote https://github.com/praveen-host/microservice-employee.git refs/heads/main", returnStdout: true).trim().substring(0, 7)
-                    echo "Changeset Number: ${CHANGESET_NUMBER}"
-                }
-            }
-        }
-           
+        }        
         stage('Build Docker Image') {
             steps {
                 sh "docker build -t ${DOCKER_IMAGE}:${CHANGESET_NUMBER} ."
