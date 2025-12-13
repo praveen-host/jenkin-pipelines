@@ -12,7 +12,7 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
             }
-        }        
+        }
         stage('Build Docker Image') {
             steps {
                 sh "docker build -t ${DOCKER_IMAGE}:${CHANGESET_NUMBER} ."
