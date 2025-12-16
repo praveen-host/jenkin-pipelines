@@ -5,60 +5,58 @@ pipeline:
   orgIdentifier: default
   tags: {}
   stages:
-    - parallel:
-        - stage:
-            name: Stage001
-            identifier: Stage001
-            description: ""
-            type: Custom
-            spec:
-              execution:
-                steps:
-                  - step:
-                      type: ShellScript
-                      name: ShellScript_1
-                      identifier: ShellScript_1
+    - stage:
+        name: Stage001
+        identifier: Stage001
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    executionTarget: {}
+                    source:
+                      type: Inline
                       spec:
-                        shell: Bash
-                        executionTarget: {}
-                        source:
-                          type: Inline
-                          spec:
-                            script: echo helloworld
-                        environmentVariables: []
-                        outputVariables: []
-                      timeout: 10m
-            tags: {}
-        - stage:
-            name: Build Docker Image
-            identifier: Build_Docker_Image
-            description: ""
-            type: CI
-            spec:
-              cloneCodebase: true
-              caching:
-                enabled: true
-                override: true
-              buildIntelligence:
-                enabled: true
-              platform:
-                os: Linux
-                arch: Amd64
-              runtime:
-                type: Docker
-                spec:
-                  harnessImageConnectorRef: yadavdockerconnector
-              execution:
-                steps:
-                  - step:
-                      type: BuildAndPushDockerRegistry
-                      name: BuildAndPushDockerRegistry_1
-                      identifier: BuildAndPushDockerRegistry_1
-                      spec:
-                        connectorRef: yadavdockerconnector
-                        repo: yadavpk/microservice-employee
-                        tags:
-                          - latest
+                        script: echo helloworld
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+        tags: {}
+    - stage:
+        name: Build DockerIMage
+        identifier: Build_DockerIMage
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: yadavdockerconnector
+                    repo: yadavpk/microservice-employee
+                    tags:
+                      - latest
   properties:
     ci:
       codebase:
