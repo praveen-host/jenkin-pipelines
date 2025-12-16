@@ -55,8 +55,8 @@ pipeline:
                       name: BuildAndPushDockerRegistry_1
                       identifier: BuildAndPushDockerRegistry_1
                       spec:
-                        connectorRef: account.harnessImage
-                        repo: yadavpk/employee-service
+                        connectorRef: yadavdockerconnector
+                        repo: yadavpk/microservice-employee
                         tags:
                           - latest
   properties:
