@@ -39,6 +39,6 @@ pipeline:
                   identifier: Run_1
                   spec:
                     connectorRef: account.harnessImage
-                    image: Harness GAR Connector
+                    image: yadav-employee001
                     shell: Sh
                     command: echo helloworld
