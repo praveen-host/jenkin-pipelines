@@ -1,0 +1,44 @@
+pipeline:
+  name: test-pipeline-001
+  identifier: testpipeline001
+  projectIdentifier: DemoProject002
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.Github
+        repoName: praveen-host/microservice-employee
+        build: <+input>
+  stages:
+    - stage:
+        name: Stage001
+        identifier: Stage001
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: aksconnector
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: Harness GAR Connector
+                    shell: Sh
+                    command: echo helloworld
